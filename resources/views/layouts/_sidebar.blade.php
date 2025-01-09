@@ -114,9 +114,9 @@
                 @endif
 
                 @if(auth()->user()->isgrant('r2_isgrant'))
-                <li class="nav-item {{ request()->is('report*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('report*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-print"></i>
+                <li class="nav-item {{ request()->is('buzon*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('buzon*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-stopwatch"></i>
                         <p>
                             Buzon
                             <i class="right fas fa-angle-left"></i>
@@ -125,7 +125,7 @@
                     <ul class="nav nav-treeview">
                         @if(auth()->user()->isgrant('r2_isgrant'))
                         <li class="nav-item">
-                            <a href="{{ route('rpt_paloteo') }}" class="nav-link {{ request()->is('report/r1*') ? 'active' : '' }}">
+                            <a href="{{ route('buzon.index') }}" class="nav-link {{ request()->is('buzon/manager*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>SetDropTime</p>
                             </a>
