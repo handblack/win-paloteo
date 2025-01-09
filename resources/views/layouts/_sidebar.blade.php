@@ -113,7 +113,7 @@
                 </li>
                 @endif
 
-                @if(auth()->user()->isgrant('r1_isgrant'))
+                @if(auth()->user()->isgrant('r2_isgrant'))
                 <li class="nav-item {{ request()->is('report*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('report*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-print"></i>
