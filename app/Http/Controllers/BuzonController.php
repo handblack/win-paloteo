@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BuzonVicidialInboundGroups;
 use App\Models\User;
 use App\Models\VlBuzonLog;
+use App\Models\VlvBuzonLog;
 use Illuminate\Http\Request;
 
 class BuzonController extends Controller
@@ -16,8 +17,10 @@ class BuzonController extends Controller
     {
         $row = BuzonVicidialInboundGroups::whereGroupId('claro')
                                             ->first();
+        $result = VlvBuzonLog::paginate(15);
         return view('buzon.index',[
-            'row' => $row
+            'row' => $row,
+            'result' => $result,
         ]);
     }
 

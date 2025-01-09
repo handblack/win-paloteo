@@ -69,13 +69,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="10">
-                            No hay información!
-                        </td>
-                    </tr>
+                    @forelse ($result as $item)
+                        <tr>
+                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->lastname }}</td>
+                            <td><span class="badge badge-success">{{ $item->droptime }}</span></td>
+                        </tr>
+                    @empty                        
+                        <tr>
+                            <td colspan="10">
+                                No hay información!
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {{ $result->links('layouts.paginate') }}
         </div>
     </div>
 @endsection
