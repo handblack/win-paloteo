@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-6">
-                    <form action="{{ route('buzon.storage') }}" method="POST">
+                    <form action="{{ route('buzon.store') }}" method="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="card">
                             <div class="card-body">
