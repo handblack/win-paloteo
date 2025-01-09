@@ -31,14 +31,15 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-6">
-                    <form action="">
+                    <form action="{{ route('buzon.create') }}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="card">
                             <div class="card-body">
                                 <label class="mb-0" for="exampleInputRounded0">Ingrese el valor segundos <code>de 5 a 360</code></label>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="input-group ">
-                                            <input class="form-control form-control-lg text-right" type="number" placeholder="" min="5" step="1" max="360" requireds>
+                                            <input class="form-control form-control-lg text-right" type="number" name="drop_call_seconds" placeholder="" min="5" step="1" max="360" requireds>
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-primary"> Modificar</button>
                                             </div>

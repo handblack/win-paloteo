@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('host')->nullable();
             $table->foreignId('user_id');
-            $table->integer('timeout')->default(0);
+            $table->integer('droptime')->default(0);
             $table->timestamps();
         });
     }

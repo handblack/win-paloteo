@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BuzonVicidialInboundGroups;
+use App\Models\User;
+use App\Models\VlBuzonLog;
 use Illuminate\Http\Request;
 
 class BuzonController extends Controller
@@ -32,7 +34,21 @@ class BuzonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'drop_call_seconds' => 'required|min:5,max:360'
+        ]);
+        $row = new VlBuzonLog();
+        $row->user_id = auth()->user()->id;
+        $row->token = User::get_token();
+        $row->droptime = $request->drop_call_seconds;
+        $row->save();
+        // Ahora actualizamos en VICIDIAL
+        BuzonVicidialInboundGroups::whereIn('group_id',[
+            'claro','entel','movistar','Servicio_0911','VTR','WOM'
+        ])->update([
+            'drop_call_seconds' => $request->drop_call_seconds
+        ]);
+        return redirect()->route('buzon.index')->with('success','Tiempo actualizado');
     }
 
     /**
