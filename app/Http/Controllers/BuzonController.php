@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuzonVicidialInboundGroups;
 use Illuminate\Http\Request;
 
 class BuzonController extends Controller
@@ -11,7 +12,11 @@ class BuzonController extends Controller
      */
     public function index()
     {
-        return view('buzon.index');
+        $row = BuzonVicidialInboundGroups::whereGroupId('claro')
+                                            ->first();
+        return view('buzon.index',[
+            'row' => $row
+        ]);
     }
 
     /**

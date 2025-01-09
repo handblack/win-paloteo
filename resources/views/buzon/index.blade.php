@@ -20,7 +20,7 @@
                     <!-- small card -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{ $row->drop_call_seconds }}</h3>
 
                             <p>Segundos</p>
                         </div>
