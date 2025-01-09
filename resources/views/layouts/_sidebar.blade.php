@@ -112,6 +112,28 @@
                     </ul>
                 </li>
                 @endif
+
+                @if(auth()->user()->isgrant('r1_isgrant'))
+                <li class="nav-item {{ request()->is('report*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('report*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-print"></i>
+                        <p>
+                            Buzon
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if(auth()->user()->isgrant('r2_isgrant'))
+                        <li class="nav-item">
+                            <a href="{{ route('rpt_paloteo') }}" class="nav-link {{ request()->is('report/r1*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>SetDropTime</p>
+                            </a>
+                        </li>
+                        @endif
+                    </ul>
+                </li>
+                @endif
             
 
                 <li class="nav-header"> </li>

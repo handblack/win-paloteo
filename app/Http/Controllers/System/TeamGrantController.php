@@ -99,6 +99,7 @@ class TeamGrantController extends Controller
         }
         // Aqui procesamos a los que solo requiere GRANT (Solo Acceso)
         $row->r1_isgrant            = $request->has('r1_isgrant') ? 'Y' : 'N';
+        $row->r2_isgrant            = $request->has('r2_isgrant') ? 'Y' : 'N';
         //$row->isactive   = $request->has('isactive') ? 'Y' : 'N';
         $row->isactive   = 'Y';
 

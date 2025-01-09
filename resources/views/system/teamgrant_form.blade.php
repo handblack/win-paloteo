@@ -314,6 +314,61 @@
                     </div>
                 </div>
             </div>
+            <div class="card-body table-responsive p-0">
+                <div class="row mr-0 ml-0">
+                    <div class="col-md-6 pr-0 pl-0">
+                        @php
+                            $master = [
+                                ['title' => 'DropTime',          'prefix' => 'r2'],
+                            ];
+                        @endphp
+                        <table class="table table-sm table-sm2 table-hover table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Buzon</th>
+                                    <th class=""><i class="fas fa-sign-in-alt fa-fw"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($master as $item)
+                                    @php
+                                        $fieldgrant = "{$item['prefix']}_isgrant";
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $item['title'] }}</td>
+                                        <td width="50" class="text-left">
+                                            <div class="form-group mb-0">
+                                                <div
+                                                    class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        name="{{ $fieldgrant }}" id="{{ $fieldgrant }}"
+                                                        {{ $row->$fieldgrant == 'Y' ? 'checked' : '' }}>
+                                                    <label class="custom-control-label"
+                                                        for="{{ $fieldgrant }}"></label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-6 pr-0 pl-0">
+                         
+                        <table class="table table-sm table-sm2 table-hover table-borderless">
+                            <thead>
+                                <tr>
+                                    <th> </th>
+                                    < 
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                    </div>
+
+                </div>
+            </div>
       
             
  

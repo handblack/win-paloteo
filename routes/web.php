@@ -6,6 +6,7 @@ use App\Http\Controllers\BPartner\BPartnerController;
 use App\Http\Controllers\BPartner\BPBankAccountController;
 use App\Http\Controllers\BPartner\BPContactController;
 use App\Http\Controllers\BPartner\SalesPersonController;
+use App\Http\Controllers\BuzonController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\DocTypeController;
 use App\Http\Controllers\Master\ReasonController;
@@ -155,6 +156,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('tl',                   TempLineController::class,['names' => 'templine']);
         Route::post('alert/upload',             [AlertController::class,'user_upload_excel'])->name('user_upload_excel');
         
+    });
+    Route::group(['prefix' => 'buzon'], function (){
+        Route::resource('buzon/manager',        BuzonController::class,['names' => 'buzon']);
     });
     
     Route::group(['prefix' => 'report'], function (){
