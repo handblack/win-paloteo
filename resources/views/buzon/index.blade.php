@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="input-group ">
-                                            <input class="form-control form-control-lg" type="number" placeholder=".form-control-lg" min="5" step="1" max="360">
+                                            <input class="form-control form-control-lg text-right" type="number" placeholder="" min="5" step="1" max="360" requireds>
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-primary"> Modificar</button>
                                             </div>
