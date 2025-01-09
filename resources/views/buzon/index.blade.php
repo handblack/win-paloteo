@@ -34,8 +34,18 @@
                     <form action="">
                         <div class="card">
                             <div class="card-body">
-                                <label for="exampleInputRounded0">Flat <code>.rounded-0</code></label>
-                                <input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+                                <label class="mb-0" for="exampleInputRounded0">Ingrese el valor segundos <code>de 5 a 360</code></label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group ">
+                                            <input class="form-control form-control-lg" type="number" placeholder=".form-control-lg" min="5" step="1" max="360">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-primary"> Modificar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
