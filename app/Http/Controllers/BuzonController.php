@@ -17,7 +17,8 @@ class BuzonController extends Controller
     {
         $row = BuzonVicidialInboundGroups::whereGroupId('claro')
                                             ->first();
-        $result = VlvBuzonLog::paginate(15);
+        $result = VlvBuzonLog::orderBy('created_at','DESC')
+                                ->paginate(15);
         return view('buzon.index',[
             'row' => $row,
             'result' => $result,

@@ -63,7 +63,7 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th>Fecha</th>
+                        <th width="160">Fecha</th>
                         <th>Usuario</th>
                         <th>Segundos</th>
                     </tr>
