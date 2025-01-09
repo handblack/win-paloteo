@@ -38,7 +38,7 @@ class BuzonController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'drop_call_seconds' => 'required|min:5,max:360'
+            'drop_call_seconds' => 'required|integer|between:1,10',
         ]);
         $row = new VlBuzonLog();
         $row->user_id = auth()->user()->id;
