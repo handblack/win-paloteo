@@ -11,7 +11,7 @@ class BuzonController extends Controller
      */
     public function index()
     {
-        //
+        return view('buzon.index');
     }
 
     /**
