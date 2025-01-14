@@ -34,5 +34,6 @@ class ComamndBuzonReset extends Command
         ]);
         $this->info('droptime=360');
         $this->info('terminado');
+    
     }
 }
