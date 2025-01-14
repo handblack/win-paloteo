@@ -61,7 +61,8 @@
 
 
 @section('content')
-    <div class="row">
+    <div class="row mb-2">
+        <div class="col-md-6"></div>
         <div class="col-md-6">
             <div class="float-right">
                 {{ $result->links('layouts.paginate') }}
@@ -97,6 +98,7 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-6"></div>
         <div class="col-md-6">
             <div class="float-right">
                 {{ $result->links('layouts.paginate') }}
