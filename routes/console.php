@@ -10,6 +10,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('app:buzon-reset')->dailyAt('22:00');
-Schedule::call(function () {
-    Log::info('verifica ejecucion');
-})->everyMinute();
+
+#Schedule::call(function () {
+#    Log::info('verifica ejecucion');
+#})->everyMinute();
