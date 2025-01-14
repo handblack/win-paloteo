@@ -35,11 +35,14 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="card">
                             <div class="card-body">
-                                <label class="mb-0" for="exampleInputRounded0">Ingrese el valor segundos <code>de 5 a 360</code></label>
+                                <label class="mb-0" for="exampleInputRounded0">Ingrese el valor segundos <code>de 5 a
+                                        360</code></label>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="input-group ">
-                                            <input class="form-control form-control-lg text-right" type="number" name="drop_call_seconds" placeholder="" min="5" step="1" max="360" requireds>
+                                            <input class="form-control form-control-lg text-right" type="number"
+                                                name="drop_call_seconds" placeholder="" min="5" step="1"
+                                                max="360" requireds>
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-primary"> Modificar</button>
                                             </div>
@@ -58,6 +61,13 @@
 
 
 @section('content')
+    <div class="row">
+        <div class="col-md-6">
+            <div class="float-right">
+                {{ $result->links('layouts.paginate') }}
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body table-responsive p-0">
             <table class="table table-sm">
@@ -75,7 +85,7 @@
                             <td>{{ $item->lastname }}</td>
                             <td><span class="badge badge-success">{{ $item->droptime }}</span></td>
                         </tr>
-                    @empty                        
+                    @empty
                         <tr>
                             <td colspan="10">
                                 No hay información!
@@ -88,7 +98,9 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            {{ $result->links('layouts.paginate') }}
+            <div class="float-right">
+                {{ $result->links('layouts.paginate') }}
+            </div>
         </div>
     </div>
 @endsection
