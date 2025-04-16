@@ -156,6 +156,7 @@
                         @php
                             $master = [
                                 ['title' => 'Paloteo',                  'prefix' => 'pa'],                                
+                                ['title' => 'Usuarios AD',              'prefix' => 'us'],                                
                             ];
                         @endphp
                         <table class="table table-sm table-sm2 table-hover table-borderless">

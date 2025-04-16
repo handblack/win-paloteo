@@ -88,6 +88,14 @@
                             </a>
                         </li>
                         @endif
+                        @if(auth()->user()->isgrant('us_isgrant'))
+                        <li class="nav-item">
+                            <a href="{{ route('ad.index') }}" class="nav-link {{ request()->is('operation/user*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Usuarios AD</p>
+                            </a>
+                        </li>
+                        @endif
                   
                     </ul>
                 </li>

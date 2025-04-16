@@ -28,6 +28,10 @@ return new class extends Migration
             $cfg = [
                 'ra',   // Motivo
                 'rs',   // SubMotivo 
+                #'cc',   // SubMotivo 
+                #'pa',   // SubMotivo 
+                #'al',   // SubMotivo 
+                #'ar',   // SubMotivo 
             ];
             foreach($cfg as $cf){
                 $table->enum("{$cf}_isgrant",['Y','N'])->default('N');
@@ -39,17 +43,19 @@ return new class extends Migration
              
 
             // cuentas corrientes
-            $table->enum('cc_isgrant',['Y','N'])->default('N');
-            $table->enum('cc_iscreated',['Y','N'])->default('N');
-            $table->enum('cc_isupdated',['Y','N'])->default('N');
-            $table->enum('cc_isdeleted',['Y','N'])->default('N');
+            #$table->enum('cc_isgrant',['Y','N'])->default('N');
+            #$table->enum('cc_iscreated',['Y','N'])->default('N');
+            #$table->enum('cc_isupdated',['Y','N'])->default('N');
+            #$table->enum('cc_isdeleted',['Y','N'])->default('N');
 
             // OPERACIONES
             // socio de negocio
             $cfg = [
+                'cc',   // Paloteo
                 'pa',   // Paloteo
                 'al',   // Sistema de mensajes
                 'ar',   // Respuesta de mensaje
+                'us',   // Usuarios
             ];
             foreach($cfg as $cf){
                 $table->enum("{$cf}_isgrant",['Y','N'])->default('N');
@@ -60,8 +66,8 @@ return new class extends Migration
             // Otras configuracions
             //r1 - Reportes de EECC
             $table->enum('r1_isgrant',['Y','N'])->default('N');
-            #$table->enum('r2_isgrant',['Y','N'])->default('N');
-            #$table->enum('r3_isgrant',['Y','N'])->default('N');
+            $table->enum('r2_isgrant',['Y','N'])->default('N');
+            $table->enum('r3_isgrant',['Y','N'])->default('N');
 
             $table->timestamps();
         });

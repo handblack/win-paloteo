@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,14 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vl_buzon_logs', function (Blueprint $table) {
+        Schema::create('vl_user_upload_lines', function (Blueprint $table) {
             $table->id();
-            $table->string('host')->nullable();
-            $table->foreignId('user_id');
-            $table->integer('droptime')->default(0);
-            $table->string('token',80)->nullable();
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
+            $table->string('token',80)->default(DB::raw('UUID()'));
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vl_buzon_logs');
+        Schema::dropIfExists('vl_user_upload_lines');
     }
 };

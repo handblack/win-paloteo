@@ -12,6 +12,7 @@ use App\Http\Controllers\Master\DocTypeController;
 use App\Http\Controllers\Master\ReasonController;
 use App\Http\Controllers\Master\SequenceController;
 use App\Http\Controllers\Master\SubReasonController;
+use App\Http\Controllers\Operation\AdController;
 use App\Http\Controllers\Operation\AlertController;
 use App\Http\Controllers\Operation\AlertLineController;
 use App\Http\Controllers\Operation\DownloadController;
@@ -145,17 +146,17 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'operation'], function (){
+        Route::resource('paloteo/manager',      PaloteoController::class,['names' => 'paloteo']);
+        Route::resource('user/manager',         AdController::class,['names' => 'ad']);
         Route::resource('alert/manager',        AlertController::class,['names' => 'alert']);
         Route::resource('alert/line',           AlertLineController::class,['names' => 'alertline']);
-        Route::resource('paloteo/manager',      PaloteoController::class,['names' => 'paloteo']);
         Route::resource('order/manager',        OrderController::class,['names' => 'order']);
         Route::resource('order/lines',          OrderLineController::class,['names' => 'orderline']);
         Route::resource('invoice/manager',      InvoiceController::class,['names' => 'invoice']);
         Route::resource('invoice/line',         InvoiceLineController::class,['names' => 'invoiceline']);
         Route::resource('th',                   TempHeaderController::class,['names' => 'tempheader']);
         Route::resource('tl',                   TempLineController::class,['names' => 'templine']);
-        Route::post('alert/upload',             [AlertController::class,'user_upload_excel'])->name('user_upload_excel');
-        
+        Route::post('alert/upload',             [AlertController::class,'user_upload_excel'])->name('user_upload_excel');        
     });
     Route::group(['prefix' => 'buzon'], function (){
         Route::resource('buzon/manager',        BuzonController::class,['names' => 'buzon']);
