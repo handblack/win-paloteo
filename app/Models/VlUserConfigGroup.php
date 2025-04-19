@@ -13,4 +13,9 @@ class VlUserConfigGroup extends Model
         'groupname',
         'token',
     ];
+
+    public function header(){
+        return $this->hasOne(VlUserConfig::class,'id','user_config_id');
+    }
+
 }

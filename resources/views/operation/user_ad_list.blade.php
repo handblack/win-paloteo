@@ -138,6 +138,11 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12 pt-3">
+                                    Descarga aquí el archivo modelo => <a href="{{ asset('download/create_user.xlsx') }}">Formato Excel</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -170,6 +175,11 @@
                                         <i class="fas fa-cloud-upload-alt fa-fw"></i>
                                         Subir Excel
                                     </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pt-3">
+                                    Descarga aquí el archivo modelo => <a href="{{ asset('download/delete_user.xlsx') }}">Formato Excel</a>
                                 </div>
                             </div>
                         </div>

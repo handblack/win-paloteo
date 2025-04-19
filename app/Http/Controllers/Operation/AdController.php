@@ -266,12 +266,18 @@ class AdController extends Controller
                 'email'         => $un,
             ]);
             // Activamos al USUARIO
-            $this->ad_create_user($usr);
+            if(env('APP_ENV','local') == 'production'){
+                $this->ad_create_user($usr);
+                $this->ad_menber_user($usr);
+            }
         }
         // Aqui ejecutamos los FILL para completar otros campos adicionaes en las alertas
         return redirect()->route('ad.index')->with('message', 'Archivo cargado'.($error > 0 ? ", se encontraron {$error} inconsistencias" : ''));
     } 
 
+    
+    public function ad_member_user($usr){
+    }
     public function ad_create_user($usr){
         //Ejecutamos el servicio del AD
         $ldap_host = env('LDAP_CONTACT_HOST','ldap://localhost');
@@ -342,7 +348,7 @@ class AdController extends Controller
                 $ap = strtoupper($row[2]);
                 $am = strtoupper($row[3]);
                 $no = strtoupper($row[4]);
-                $cp = $row[5];
+                //$cp = $row[5];
                 //empezamos la validacion
                 if(!in_array($dt,['dni','ce'])){
                     $msg = 'En el tipo de documento debes especificad dni o ce';
@@ -376,12 +382,7 @@ class AdController extends Controller
                     $msg = 'Debes especificar el nombre';
                     $error++;
                     break; 
-                }
-                if(!trim($cp)){
-                    $msg = 'Debes especificar la campaña';
-                    $error++;
-                    break; 
-                }
+                }                 
                 $un = strtolower(trim($dn).'@contact.com');
                 $usr = VlUserAd::whereEmail($un)
                                 ->whereDoctype($dt)
@@ -418,7 +419,7 @@ class AdController extends Controller
             $ap = strtoupper($row[2]);
             $am = strtoupper($row[3]);
             $no = strtoupper($row[4]);
-            $cp = $row[5];
+            //$cp = $row[5];
             
             $un = strtolower(trim($dn).'@contact.com');
             $usr = VlUserAd::whereEmail($un)
@@ -448,7 +449,7 @@ class AdController extends Controller
                 'materno'       => $am,
                 'nombre'        => $no,
                 'documentno'    => $dn,
-                'campaign'      => $cp,
+                //'campaign'      => $cp,
                 'email'         => $un,
             ]);
             
