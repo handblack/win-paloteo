@@ -19,11 +19,17 @@ class VlUserAd extends Model
 
     protected $fillable = [
         'doctype_id',
+        'doctype',
         'documentno',
         'nombre',
         'paterno',
         'materno',
         'email',
+        'campaign',
         'token',
     ];
+
+    public function createdby(){    return $this->hasOne(User::class,'id','created_by');}
+    public function updatedby(){    return $this->hasOne(User::class,'id','updated_by');}
+
 }

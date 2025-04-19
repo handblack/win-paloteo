@@ -14,12 +14,15 @@ return new class extends Migration
     {
         Schema::create('vl_user_ads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('doctype_id');
+            $table->foreignId('doctype_id')->nullable();
+            $table->string('doctype',10)->nullable();
             $table->string('documentno',15)->nullable();
             $table->string('nombre',100)->nullable();
             $table->string('paterno',100)->nullable();
             $table->string('materno',100)->nullable();
             $table->string('email',150)->nullable();
+            $table->string('campaign',50)->nullable();
+            $table->enum('isactive',['Y','N'])->default('Y');
             $table->string('token',80)->default(DB::raw('UUID()'));
             $table->timestamps();
         });

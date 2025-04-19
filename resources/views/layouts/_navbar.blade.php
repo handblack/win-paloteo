@@ -32,6 +32,9 @@
                                 class="fas fa-list-ol fa-fw"></i> Secuenciador </a></li>
                     <li><a href="{{ route('parameter.index') }}" class="dropdown-item"><i
                                 class="fas fa-tools fa-fw"></i> Parametros </a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="{{ route('groupad.index') }}" class="dropdown-item"><i
+                                class="fas fa-tools fa-fw"></i> ConfigAD </a></li>
 
                     {{--
                     <li class="dropdown-divider"></li>

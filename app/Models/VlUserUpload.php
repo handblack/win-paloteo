@@ -18,7 +18,20 @@ class VlUserUpload extends Model
     }
 
     protected $fillable = [
+        'documentno',
+        'created_by',
+        'datetrx',
+        'mode',
+        'isactive',
+        'filename',
+        'size',
         'token',
     ];
+
+    public function lines(){
+        return $this->hasMany(VlUserUploadLine::class,'user_upload_id','id');
+    }
+    public function createdby(){    return $this->hasOne(User::class,'id','created_by');}
+    public function updatedby(){    return $this->hasOne(User::class,'id','updated_by');}
     
 }

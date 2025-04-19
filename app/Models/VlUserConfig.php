@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class VlUserUploadLine extends Model
+class VlUserConfig extends Model
 {
     use HasFactory;
     protected static function boot()
@@ -18,15 +18,12 @@ class VlUserUploadLine extends Model
     }
 
     protected $fillable = [
-        'user_upload_id',
-        'doctype',
-        'documentno',
-        'nombre',
-        'paterno',
-        'materno',
-        'email',
-        'campaign',
+        'configname',
         'token',
     ];
-    
+
+    public function lines(){
+        return $this->hasMany(VlUserConfigGroup::class,'user_config_id','id');
+    }
+
 }

@@ -38,6 +38,8 @@ use App\Http\Controllers\Product\ProductTenidoController;
 use App\Http\Controllers\Product\ProductTituloController;
 use App\Http\Controllers\Product\ProductUMController;
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\System\ConfigADController;
+use App\Http\Controllers\System\ConfigADGroupController;
 use App\Http\Controllers\System\ParameterController;
 use App\Http\Controllers\System\TeamController;
 use App\Http\Controllers\System\TeamGrantController;
@@ -86,6 +88,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('teamgrant',            TeamGrantController::class,['names' => 'teamgrant']);
         Route::resource('sequence',             SequenceController::class,['names' => 'sequence']);
         Route::resource('parameter',            ParameterController::class,['names' => 'parameter']);
+        Route::resource('group',                ConfigADController::class,['names' => 'groupad']);
+        Route::resource('groupline',            ConfigADGroupController::class,['names' => 'groupadline']);
+        Route::get('groupli/create/{id}',           [ConfigADGroupController::class,'create_key'])->name('groupadline.create_key');
+
         Route::post('parameter',                [ParameterController::class,'api_datatable'])->name('parameter.ajax');
         Route::post('ajax/user',                [User::class,           'api_user'])->name('api_user');
         Route::post('ajax/asesor',                [User::class,           'api_asesor'])->name('api_asesor');
@@ -157,6 +163,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('th',                   TempHeaderController::class,['names' => 'tempheader']);
         Route::resource('tl',                   TempLineController::class,['names' => 'templine']);
         Route::post('alert/upload',             [AlertController::class,'user_upload_excel'])->name('user_upload_excel');        
+
+        Route::post('user/upload/create',       [AdController::class,'user_create_upload_excel'])->name('user_create_upload_excel');        
+        Route::post('user/upload/delete',       [AdController::class,'user_delete_upload_excel'])->name('user_delete_upload_excel');        
     });
     Route::group(['prefix' => 'buzon'], function (){
         Route::resource('buzon/manager',        BuzonController::class,['names' => 'buzon']);

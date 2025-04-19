@@ -12,15 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vl_user_uploads', function (Blueprint $table) {
+        Schema::create('vl_user_config_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('documentno',20)->nullable();
-            $table->date('datetrx',20)->nullable();
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
-            $table->string('filename',250)->nullable();
-            $table->integer('size')->default(0);
-            $table->enum('mode',['I','O']);
+            $table->foreignId('user_config_id')->constant('vl_user_configs');
+            $table->integer('orden')->default(0);
+            $table->text('groupname')->nullable();
+            $table->string('shortname')->nullable();
             $table->enum('isactive',['Y','N'])->default('Y');
             $table->string('token',80)->default(DB::raw('UUID()'));
             $table->timestamps();
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vl_user_uploads');
+        Schema::dropIfExists('vl_user_config_groups');
     }
 };
