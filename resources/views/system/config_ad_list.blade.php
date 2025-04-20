@@ -84,15 +84,17 @@
                             <tr id="tr-x{{ $it->id }}">
                                 <td class="text-monospace pl-5">
                                     <span class="badge badge-secondary">{{ $it->orden }}</span>
+                                    @if($it->istype == 'P')
+                                        <span class="badge badge-warning">PROFILE</span>
+                                    @else
+                                        <span class="badge badge-info">MEMBER</span>
+                                    @endif
                                     {{ $it->groupname }}
                                 </td>
                                 <td class="text-right text-nowrap">
-                              
-
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <i class="far fa-hand-point-right"></i>
                                     </a>
-
                                     <div class="dropdown-menu" style="">
                                         <a class="dropdown-item" href="{{ route('groupadline.edit', $it->token) }}"><i class="far fa-edit fa-fw"></i> Modificar</a>
                                         <div class="dropdown-divider"></div>

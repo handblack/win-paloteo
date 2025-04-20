@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('orden')->default(0);
             $table->text('groupname')->nullable();
             $table->string('shortname')->nullable();
+            $table->enum('istype',['P','M'])->default('P');
             $table->enum('isactive',['Y','N'])->default('Y');
             $table->string('token',80)->default(DB::raw('UUID()'));
             $table->timestamps();

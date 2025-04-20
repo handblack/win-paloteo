@@ -31,8 +31,25 @@
                 </h3>
             </div>
             <div class="card-body bg-form">
-
-                <input type="text" name="groupname" value="{{ old('groupname', $row->groupname) }}" class="form-control">
+				<div class="row mb-2">
+					<div class="col-md-1">
+						<label class="mb-0">Orden</label>
+						<input type="number" name="orden" value="{{ old('orden',$row->orden) }}" class="form-control">
+					</div>
+					<div class="col-md-4">
+						<label class="mb-0">Tipo de registro</label>
+						<select name="istype" id="" class="form-control">
+							<option value="P" {{ $row->istype == 'P' ? 'selected' : '' }}>PROFILE</option>
+							<option value="M" {{ $row->istype == 'M' ? 'selected' : '' }}>MEMBER</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="mb-0">Path LDAP</label>
+						<input type="text" name="groupname" value="{{ old('groupname', $row->groupname) }}" class="form-control">
+					</div>
+				</div>
             </div>
             <div class="card-footer">
                 <a href="{{ route('groupad.index') }}" class="btn btn-danger "><i class="fas fa-times fa-fw"></i>
@@ -49,6 +66,9 @@
 			<p class="lead">			
 			Para registrar una clave se tiene mantener la siguiente estructura en la clave:
 			</p>
+			<pre>
+				OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com
+			</pre>
 		</div>
 	</div>
 @endsection

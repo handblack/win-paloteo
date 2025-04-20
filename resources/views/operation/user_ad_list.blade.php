@@ -83,8 +83,9 @@
                         <th>FILENAME</th>
                         <th width="80"><i class="fas fa-users fa-fw"></i></th>
                         <th><i class="fas fa-file-archive fa-fw"></i></th>
-                        <th></th>
                         <th width="100"></th>
+                        <th width="100"></th>
+                        <th width="10"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,8 +101,23 @@
                             </td>
                             <td>{{ count($item->lines) }}</td>
                             <td>{{ round($item->size/1024,0) }} kb</td>
-                            <td>{{ $item->createdby->email }}</td>
+                            <td class="text-nowrap pl">{{ $item->createdby->email }}</td>
                             <td class="text-nowrap">{{ $item->created_at }}</td>
+                            <td class="text-right">
+                                <a href="#" class="pl-2 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="far fa-list-alt"></i>
+                                </a>
+                                <div class="dropdown-menu" style="">
+                                    @if($item->mode == 'I')
+                                        <!--  -->
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('groupadline.edit', $item->token) }}"><i class="far fa-check-square fa-fw"></i> Aprobar</a>
+                                    @endif
+                                    <a class="dropdown-item" href="{{ route('groupadline.edit', $item->token) }}"><i class="far fa-edit fa-fw"></i> Modificar</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item delete-record" href="#" data-id="x{{ $item->id }}" data-url="{{ route('groupadline.destroy', $item->token) }}"><i class="far fa-trash-alt fa-fw"></i> Eliminar</a>
+                                </div>
+                            </td>
                         </tr>
                     @empty
                         

@@ -26,6 +26,8 @@ class VlUserAd extends Model
         'materno',
         'email',
         'campaign',
+        'accountname',
+        'accountpass',
         'token',
     ];
 

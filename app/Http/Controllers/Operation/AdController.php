@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Operation;
 use App\Http\Controllers\Controller;
 use App\Models\VlUserAd;
 use App\Models\VlUserConfig;
+use App\Models\VlUserConfigGroup;
 use App\Models\VlUserUpload;
 use App\Models\VlUserUploadLine;
 use Carbon\Carbon;
@@ -42,7 +43,7 @@ class AdController extends Controller
                                     $query->where('created_by',auth()->user()->id);
                                 }
                             })
-                            ->orderBy('datetrx','DESC')
+                            ->orderBy('created_at','DESC')
                             ->paginate(env('PAGINATE_MODAL',14))
                             ->withQueryString();
         session([
@@ -251,11 +252,13 @@ class AdController extends Controller
                     'nombre'        => $no,
                     'documentno'    => $dn,
                     'campaign'      => $cp,
+                    'accountname'   => substr($no,0,1).strtolower($ap).'_'.$dn,
+                    'accountpass'   => 'Peru++2023',
                     'email'         => $un,
                 ]);
             }
 
-            VlUserUploadLine::create([
+            $lin = VlUserUploadLine::create([
                 'user_upload_id'=> $head->id,
                 'doctype'       => $dt,
                 'paterno'       => $ap,
@@ -268,55 +271,69 @@ class AdController extends Controller
             // Activamos al USUARIO
             if(env('APP_ENV','local') == 'production'){
                 $this->ad_create_user($usr);
-                $this->ad_menber_user($usr);
+                $this->ad_member_user($usr);
             }
         }
         // Aqui ejecutamos los FILL para completar otros campos adicionaes en las alertas
         return redirect()->route('ad.index')->with('message', 'Archivo cargado'.($error > 0 ? ", se encontraron {$error} inconsistencias" : ''));
     } 
 
-    
-    public function ad_member_user($usr){
-    }
-    public function ad_create_user($usr){
+    private function ad_connect(){
         //Ejecutamos el servicio del AD
         $ldap_host = env('LDAP_CONTACT_HOST','ldap://localhost');
         $ldap_port = env('LDAP_CONTACT_PORT',389);
-        $ldap_user = env('LDAP_CONTACT_USER','user@domain.ad'); 
-        $ldap_pass = env('LDAP_CONTACT_PASS','');
-        // Conectarse al servidor LDAP
         $ldap_conn = ldap_connect($ldap_host, $ldap_port);
         ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
-        // Autenticarse
+        return $ldap_conn;
+    }
+    private function ad_member_user($usr){
+    }
+    private function ad_create_user($usr){
+        $pro = VlUserConfig::whereConfigname($usr->campaign)
+                                ->first();
+        $prl = VlUserConfigGroup::whereUserConfigId($pro->id)
+                                ->whereIstype('P')  //Buscamos el profile
+                                ->first();
+        if(!$prl){
+            return false;
+        }
+        $ldap_user = env('LDAP_CONTACT_USER','user@domain.ad'); 
+        $ldap_pass = env('LDAP_CONTACT_PASS','');
+        $ldap_conn = $this->ad_connect();
         if (ldap_bind($ldap_conn, $ldap_user, $ldap_pass)) {
-            // DN donde se creará el nuevo usuario
             $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
+            $dn = implode(',',[
+                "CN={$usr->paterno} {$usr->materno} $usr->nombre",
+                "OU={$pro->configname}",
+                $prl->groupname
+            ]);
+            #$dn = "CN={$usr->paterno} {$usr->materno} $usr->nombre,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
 
             // DN del grupo
             #$group_dn = [];
             #$group_dn[0] = "CN=ESTRUCTURA,OU=CONTACT,DC=contact,DC=com";
             #$group_dn[1] = "CN=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
-
-            $group_dn = "CN=ESTRUCTURA,OU=CONTACT,DC=contact,DC=com";
+            #$group_dn = "CN=ESTRUCTURA,OU=CONTACT,DC=contact,DC=com";
 
             // Atributos del nuevo usuario
             $info = [];
-            $info["cn"] = "Juan Perez";
-            $info["givenName"] = "Juan";
-            $info["sn"] = "Perez";
-            $info["objectClass"] = ["top", "person", "organizationalPerson", "user"];
-            $info["sAMAccountName"] = "jperez";
-            $info["userPrincipalName"] = "jperez@contact.com";
-            $info["displayName"] = "Juan Perez";
-            $info["mail"] = "jperez@contact.com";
-            $info["member"] = $group_dn;
+            $info["cn"]                 = "{$usr->paterno} {$usr->nombre}";
+            $info["givenName"]          = "{$usr->nombre}";
+            $info["sn"]                 = "{$usr->paterno}";
+            $info["objectClass"]        = ["top", "person", "organizationalPerson", "user"];
+            $info["sAMAccountName"]     = $usr->accountname;
+            $info["userPrincipalName"]  = $usr->email;
+            $info["displayName"]        = "{$usr->paterno} {$usr->materno} {$usr->nombre}";
+            $info["mail"]               = $usr->email;
+            #$info["member"] = $group_dn;
 
             // Crear el usuario
             if (ldap_add($ldap_conn, $dn, $info)) {
-                echo "Usuario creado correctamente.";
+                #echo "Usuario creado correctamente.";
             } else {
                 echo "Error al crear usuario: " . ldap_error($ldap_conn);
+                die();
             }
 
             ldap_unbind($ldap_conn);

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('materno',100)->nullable();
             $table->string('email',150)->nullable();
             $table->string('campaign',50)->nullable();
+            $table->string('accountname',100)->nullable();
+            $table->string('accountpass',100)->nullable();
             $table->enum('isactive',['Y','N'])->default('Y');
             $table->string('token',80)->default(DB::raw('UUID()'));
             $table->timestamps();
