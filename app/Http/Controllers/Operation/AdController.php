@@ -317,7 +317,7 @@ class AdController extends Controller
                 "ou={$pro->configname}",
                 $prl->groupname
             ]);
-            $dn = "CN={$usr->paterno} {$usr->nombre},OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
+            $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},OU={$pro->configname},OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN={$usr->paterno} {$usr->materno} $usr->nombre,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
 
