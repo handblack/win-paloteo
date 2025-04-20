@@ -319,6 +319,7 @@ class AdController extends Controller
             ]);
             $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},OU={$usr->campaign},OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},{$prl->groupname}";
+            $dn = mb_convert_encoding($dn,"UTF-8", "ISO-8859-1");
             #$dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN={$usr->paterno} {$usr->materno} $usr->nombre,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
 
