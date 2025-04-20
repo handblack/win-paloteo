@@ -313,10 +313,11 @@ class AdController extends Controller
             $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             //    "CN=LOMBARDINI INGA LUIGI,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com
             $dn = implode(',',[
-                "CN={$usr->paterno} {$usr->nombre}",
-                "OU={$pro->configname}",
+                "cn={$usr->paterno} {$usr->nombre}",
+                "ou={$pro->configname}",
                 $prl->groupname
             ]);
+            $dn = "CN={$usr->paterno} {$usr->nombre},OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN={$usr->paterno} {$usr->materno} $usr->nombre,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
 
