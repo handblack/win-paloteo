@@ -287,8 +287,10 @@ class AdController extends Controller
         ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
         return $ldap_conn;
     }
+
     private function ad_member_user($usr){
     }
+
     private function ad_create_user($usr){
         $pro = VlUserConfig::whereConfigname($usr->campaign)
                                 ->first();
@@ -329,6 +331,7 @@ class AdController extends Controller
             #$info["member"] = $group_dn;
 
             // Crear el usuario
+            dd($dn);
             if (ldap_add($ldap_conn, $dn, $info)) {
                 #echo "Usuario creado correctamente.";
             } else {
