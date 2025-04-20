@@ -306,7 +306,7 @@ class AdController extends Controller
         if (ldap_bind($ldap_conn, $ldap_user, $ldap_pass)) {
             $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             $dn = implode(',',[
-                "CN={$usr->paterno} {$usr->materno} $usr->nombre",
+                "CN={$usr->paterno} {$usr->materno} {$usr->nombre}",
                 "OU={$pro->configname}",
                 $prl->groupname
             ]);
@@ -331,7 +331,7 @@ class AdController extends Controller
             #$info["member"] = $group_dn;
 
             // Crear el usuario
-            dd($dn);
+            #dd($dn);
             if (ldap_add($ldap_conn, $dn, $info)) {
                 #echo "Usuario creado correctamente.";
             } else {
