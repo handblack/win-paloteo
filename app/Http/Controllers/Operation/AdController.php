@@ -331,7 +331,7 @@ class AdController extends Controller
             #$info["member"] = $group_dn;
 
             // Crear el usuario
-            dd($dn);
+            //dd($dn);
             if (ldap_add($ldap_conn, $dn, $info)) {
                 #echo "Usuario creado correctamente.";
             } else {
