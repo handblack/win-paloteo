@@ -311,8 +311,9 @@ class AdController extends Controller
 
         if (ldap_bind($ldap_conn, $ldap_user, $ldap_pass)) {
             $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
+            //    "CN=LOMBARDINI INGA LUIGI,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com
             $dn = implode(',',[
-                "CN={$usr->paterno} {$usr->materno} {$usr->nombre}",
+                "CN={$usr->paterno} {$usr->nombre}",
                 "OU={$pro->configname}",
                 $prl->groupname
             ]);
