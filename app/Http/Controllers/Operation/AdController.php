@@ -318,6 +318,7 @@ class AdController extends Controller
                 $prl->groupname
             ]);
             $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},OU={$usr->campaign},OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
+            $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},{$prl->groupname}";
             #$dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN={$usr->paterno} {$usr->materno} $usr->nombre,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
 
