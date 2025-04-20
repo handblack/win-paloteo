@@ -302,7 +302,13 @@ class AdController extends Controller
         }
         $ldap_user = env('LDAP_CONTACT_USER','user@domain.ad'); 
         $ldap_pass = env('LDAP_CONTACT_PASS','');
-        $ldap_conn = $this->ad_connect();
+        #$ldap_conn = $this->ad_connect();
+        $ldap_host = env('LDAP_CONTACT_HOST','ldap://localhost');
+        $ldap_port = env('LDAP_CONTACT_PORT',389);
+        $ldap_conn = ldap_connect($ldap_host, $ldap_port);
+        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
+
         if (ldap_bind($ldap_conn, $ldap_user, $ldap_pass)) {
             $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             $dn = implode(',',[
