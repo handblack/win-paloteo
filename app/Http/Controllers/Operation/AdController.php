@@ -311,6 +311,47 @@ class AdController extends Controller
         ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
 
+        if (!@ldap_bind($ldap_conn, $ldap_user, $ldap_pass)) {
+            Log::info("Bind failed: " . ldap_error($ldap_conn));
+            die("Bind failed: " . ldap_error($ldap_conn));
+        }
+
+        $dn = "cn=Juan Perez,ou=People,dc=CONTACT.COM,dc=com";
+        $entry = [
+            "cn" => "Juan Perez",
+            "sn" => "Perez",
+            "objectClass" => ["top","person","organizationalPerson","inetOrgPerson"],
+            "mail" => "juan.perez@example.com",
+        ];
+
+        Log::info("DN {$dn}");
+        if (ldap_add($ldap_conn, $dn, $entry)) {
+            Log::info("Usuario creado correctamente");
+        } else {
+            Log::info("Error: " . ldap_error($ldap_conn) . " (" . ldap_errno($ldap_conn) . ")");
+        }
+        ldap_unbind($ldap_conn);
+    }
+
+    private function ad_create_user_($usr){
+        $pro = VlUserConfig::whereConfigname($usr->campaign)
+                                ->first();
+        $prl = VlUserConfigGroup::whereUserConfigId($pro->id)
+                                ->whereIstype('P')  //Buscamos el profile
+                                ->first();
+        if(!$prl){
+            return false;
+        }
+        $ldap_user = env('LDAP_CONTACT_USER','user@domain.ad'); 
+        $ldap_pass = env('LDAP_CONTACT_PASS','');
+        #$ldap_conn = $this->ad_connect();
+        $ldap_host = env('LDAP_CONTACT_HOST','ldap://localhost');
+        $ldap_port = env('LDAP_CONTACT_PORT',389);
+        $ldap_conn = ldap_connect($ldap_host, $ldap_port);
+        Log::info("Conexion {$ldap_host}, {$ldap_port} {$ldap_user} {$ldap_pass}");
+        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
+
         if (ldap_bind($ldap_conn, $ldap_user, $ldap_pass)) {
             $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             //    "CN=LOMBARDINI INGA LUIGI,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com
