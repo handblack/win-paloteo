@@ -11,6 +11,7 @@ use App\Models\VlUserUploadLine;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -306,6 +307,7 @@ class AdController extends Controller
         $ldap_host = env('LDAP_CONTACT_HOST','ldap://localhost');
         $ldap_port = env('LDAP_CONTACT_PORT',389);
         $ldap_conn = ldap_connect($ldap_host, $ldap_port);
+        Log::info("Conexion {$ldap_host}, {$ldap_port} {$ldap_user} {$ldap_pass}");
         ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
 
