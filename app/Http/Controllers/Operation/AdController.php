@@ -271,7 +271,7 @@ class AdController extends Controller
             // Activamos al USUARIO
             if(env('APP_ENV','local') == 'production'){
                 $this->ad_create_user($usr);
-                $this->ad_member_user($usr);
+                //$this->ad_member_user($usr);
             }
         }
         // Aqui ejecutamos los FILL para completar otros campos adicionaes en las alertas
