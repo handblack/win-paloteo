@@ -316,7 +316,7 @@ class AdController extends Controller
             die("Bind failed: " . ldap_error($ldap_conn));
         }
 
-        $dn = "cn=Juan Perez,ou=People,dc=CONTACT.COM,dc=com";
+        $dn = "cn=Juan Perez,ou=Users,dc=contact.com,dc=com";
         $entry = [
             "cn" => "Juan Perez",
             "sn" => "Perez",
