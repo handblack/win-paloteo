@@ -322,7 +322,8 @@ class AdController extends Controller
             $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},OU={$usr->campaign},OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             $dn = "CN={$usr->paterno} {$usr->materno} {$usr->nombre},{$prl->groupname}";
             $dn = mb_convert_encoding($dn,"UTF-8", "ISO-8859-1");
-            #$dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
+            
+            $dn = "CN=Juan Perez,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
             #$dn = "CN={$usr->paterno} {$usr->materno} $usr->nombre,OU=win,OU=OPERACIONES,OU=CONTACT,DC=contact,DC=com";
 
             // DN del grupo
@@ -345,13 +346,15 @@ class AdController extends Controller
 
             // Crear el usuario
             //dd($dn);
+            Log::info("DN {$dn}");
             if (ldap_add($ldap_conn, $dn, $info)) {
                 #echo "Usuario creado correctamente.";
+                Log::info('Usuario fue creado correctamente');
             } else {
+                Log::info(ldap_error($ldap_conn));
                 echo "Error al crear usuario: " . ldap_error($ldap_conn);
                 die();
             }
-
             ldap_unbind($ldap_conn);
         } else {
             echo "Error al conectar o autenticar: " . ldap_error($ldap_conn);
