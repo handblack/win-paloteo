@@ -316,7 +316,12 @@ class AdController extends Controller
             die("Bind failed: " . ldap_error($ldap_conn));
         }
 
-        $dn = "cn=Juan Perez,ou=Users,dc=contact.com,dc=com";
+        // Construir DN seguro
+        $cn = ldap_escape("{$usr->paterno} {$usr->materno} {$usr->nombre}", '', LDAP_ESCAPE_DN);
+        $ou = ldap_escape($pro->configname, '', LDAP_ESCAPE_DN);
+        $dn = "CN={$cn},OU={$ou},OU=OPERACIONES,OU=CONTACT,DC=contact.com,DC=com";
+        Log::info("Attempting ldap_add with DN: {$dn}");
+
         $entry = [
             "cn" => "Juan Perez",
             "sn" => "Perez",
