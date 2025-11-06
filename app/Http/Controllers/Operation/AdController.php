@@ -9,6 +9,7 @@ use App\Models\VlUserConfigGroup;
 use App\Models\VlUserUpload;
 use App\Models\VlUserUploadLine;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -293,6 +294,97 @@ class AdController extends Controller
     }
 
     private function ad_create_user($usr){
+        $pro = VlUserConfig::whereConfigname($usr->campaign)->first();
+        $prl = VlUserConfigGroup::whereUserConfigId($pro->id)->whereIstype('P')->first();
+        if(!$prl){
+            return false;
+        }
+        // Configuración de conexión LDAP
+        $ldap_server    = env('LDAP_CONTACT_HOST','ldap://localhost'); //"ldap://contact.com"; // Reemplaza con tu servidor LDAP
+        $ldap_domain    = env('LDAP_CONTACT_DOMAIN','contact.com');
+        $ldap_port      = env('LDAP_CONTACT_PORT',389);
+        $ldap_dn        = env('LDAP_CONTACT_DN','dc=contact,dc=com');
+        $admin_user     = env('LDAP_CONTACT_USER','llombardi@contact.com'); // Usuario administrador
+        $admin_password = env('LDAP_CONTACT_PASS','Peru+1016'); // Contraseña del administrador
+
+
+        Log::info("Conexion {$ldap_server}, {$ldap_port} {$admin_user} {$admin_password}");
+        
+        // Datos del nuevo usuario
+        $new_user = [
+            'cn'            => "{$usr->paterno} {$usr->nombre}", // Common Name
+            'sn'            => $usr->paterno, // Surname
+            'givenName'     => $usr->nombre, // Given Name
+            'uid'           => strtolower(trim($usr->nombre[0] . $usr->paterno . $usr->documentno)), // User ID
+            'userPassword'  => 'password123', // Contraseña
+            'mail'          => $usr->email, // Email
+            'objectClass'   => [
+                'top',
+                'person',
+                'organizationalPerson',
+                'inetOrgPerson'
+            ]
+        ];
+
+        // Conectar al servidor LDAP
+        $ldap_conn = ldap_connect($ldap_server);
+        if (!$ldap_conn) {
+            die("No se pudo conectar al servidor LDAP");
+        }
+
+        // Configurar opciones LDAP
+        ldap_set_option($ldap_conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap_conn, LDAP_OPT_REFERRALS, 0);
+
+        // Autenticar como administrador
+        $ldap_bind = ldap_bind($ldap_conn, $admin_user, $admin_password);
+        if (!$ldap_bind) {
+            die("Error en la autenticación: " . ldap_error($ldap_conn));
+        }
+
+        // DN (Distinguished Name) para el nuevo usuario
+        $user_dn = "cn=" . $new_user['cn'] . ",ou=users," . $ldap_dn;
+
+        // Preparar los datos para agregar
+        $ldap_record = [
+            'cn' => $new_user['cn'],
+            'sn' => $new_user['sn'],
+            'givenName' => $new_user['givenName'],
+            'uid' => $new_user['uid'],
+            'userPassword' => $new_user['userPassword'],
+            'mail' => $new_user['mail'],
+            'objectClass' => $new_user['objectClass']
+        ];
+
+        // Intentar agregar el usuario
+        try {
+            $result = ldap_add($ldap_conn, $user_dn, $ldap_record);
+            
+            if ($result) {
+                echo "Usuario agregado exitosamente: " . $user_dn . "\n";
+                
+                // Opcional: Verificar que el usuario fue agregado
+                $search_filter = "(cn=" . $new_user['cn'] . ")";
+                $search_result = ldap_search($ldap_conn, $ldap_dn, $search_filter);
+                $entries = ldap_get_entries($ldap_conn, $search_result);
+                
+                if ($entries['count'] > 0) {
+                    echo "Usuario verificado en LDAP:\n";
+                    print_r($entries[0]);
+                }
+            } else {
+                echo "Error al agregar usuario: " . ldap_error($ldap_conn) . "\n";
+            }
+            
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage() . "\n";
+        }
+
+        // Cerrar conexión
+        ldap_unbind($ldap_conn);
+    }
+
+    private function ad_create_user_1($usr){
         $pro = VlUserConfig::whereConfigname($usr->campaign)
                                 ->first();
         $prl = VlUserConfigGroup::whereUserConfigId($pro->id)
